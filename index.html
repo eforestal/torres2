@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css">
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/Control.OSMGeocoder.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.wms.js"></script>
+        <script src="js/Control.OSMGeocoder.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/Provincias_4.js"></script>
+        <script src="data/CastillayLen_5.js"></script>
+        <script src="data/TorresvigilanciaincendiosCyL_6.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        var measureControl = new L.Control.Measure({
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        var basemap0 = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap0.addTo(map);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        var overlay_MapasrasterdelIGN_0 = L.WMS.layer("http://www.ign.es/wms-inspire/mapa-raster?", "mtn_rasterizado", {
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            continuousWorld : true,
+            tiled: true,
+            info_format: 'text/html',
+            opacity: 1,
+            identify: false,
+        });
+        var overlay_PNOA_1 = L.WMS.layer("http://www.idee.es/wms/PNOA/PNOA?", "PNOA", {
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            continuousWorld : true,
+            tiled: true,
+            info_format: 'text/html',
+            opacity: 1,
+            identify: false,
+        });
+        var overlay_Mapadehipsometra5m_2 = L.WMS.layer("http://www.idecyl.jcyl.es/IGCyL/services/MedioFisico/Topografia/MapServer/WMSServer", "4", {
+            format: 'image/jpeg',
+            uppercase: true,
+            transparent: true,
+            continuousWorld : true,
+            tiled: true,
+            info_format: 'text/html',
+            opacity: 1,
+            identify: false,
+        });
+        var overlay_Mapadesombras5m_3 = L.WMS.layer("http://www.idecyl.jcyl.es/IGCyL/services/MedioFisico/Topografia/MapServer/WMSServer", "1", {
+            format: 'image/jpeg',
+            uppercase: true,
+            transparent: true,
+            continuousWorld : true,
+            tiled: true,
+            info_format: 'text/html',
+            opacity: 0,
+            identify: false,
+        });
+        function pop_Provincias_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID'] !== null ? Autolinker.link(String(feature.properties['ID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CODINE'] !== null ? Autolinker.link(String(feature.properties['CODINE'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMBRE'] !== null ? Autolinker.link(String(feature.properties['NOMBRE'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Provincias_4_0() {
+            return {
+                pane: 'pane_Provincias_4',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_Provincias_4');
+        map.getPane('pane_Provincias_4').style.zIndex = 404;
+        map.getPane('pane_Provincias_4').style['mix-blend-mode'] = 'normal';
+        var layer_Provincias_4 = new L.geoJson(json_Provincias_4, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_Provincias_4',
+            onEachFeature: pop_Provincias_4,
+            style: style_Provincias_4_0,
+        });
+        bounds_group.addLayer(layer_Provincias_4);
+        map.addLayer(layer_Provincias_4);
+        function pop_CastillayLen_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID'] !== null ? Autolinker.link(String(feature.properties['ID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COD_CCAA'] !== null ? Autolinker.link(String(feature.properties['COD_CCAA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMBRE'] !== null ? Autolinker.link(String(feature.properties['NOMBRE'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SUPERFICIE'] !== null ? Autolinker.link(String(feature.properties['SUPERFICIE'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_CastillayLen_5_0() {
+            return {
+                pane: 'pane_CastillayLen_5',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_CastillayLen_5');
+        map.getPane('pane_CastillayLen_5').style.zIndex = 405;
+        map.getPane('pane_CastillayLen_5').style['mix-blend-mode'] = 'normal';
+        var layer_CastillayLen_5 = new L.geoJson(json_CastillayLen_5, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_CastillayLen_5',
+            onEachFeature: pop_CastillayLen_5,
+            style: style_CastillayLen_5_0,
+        });
+        bounds_group.addLayer(layer_CastillayLen_5);
+        map.addLayer(layer_CastillayLen_5);
+        function pop_TorresvigilanciaincendiosCyL_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">TORRE</th>\
+                        <td>' + (feature.properties['TORRE'] !== null ? Autolinker.link(String(feature.properties['TORRE'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PROVINCIA</th>\
+                        <td>' + (feature.properties['PROVINCIA'] !== null ? Autolinker.link(String(feature.properties['PROVINCIA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ID</th>\
+                        <td>' + (feature.properties['ID'] !== null ? Autolinker.link(String(feature.properties['ID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">id_provin</th>\
+                        <td>' + (feature.properties['id_provin'] !== null ? Autolinker.link(String(feature.properties['id_provin'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">X_25830</th>\
+                        <td>' + (feature.properties['X_25830'] !== null ? Autolinker.link(String(feature.properties['X_25830'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Y_25830</th>\
+                        <td>' + (feature.properties['Y_25830'] !== null ? Autolinker.link(String(feature.properties['Y_25830'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_TorresvigilanciaincendiosCyL_6_0() {
+            return {
+                pane: 'pane_TorresvigilanciaincendiosCyL_6',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/poi_tower_water.svg',
+            iconSize: [15.2, 15.2]
+        }),
+            }
+        }
+        map.createPane('pane_TorresvigilanciaincendiosCyL_6');
+        map.getPane('pane_TorresvigilanciaincendiosCyL_6').style.zIndex = 406;
+        map.getPane('pane_TorresvigilanciaincendiosCyL_6').style['mix-blend-mode'] = 'normal';
+        var layer_TorresvigilanciaincendiosCyL_6 = new L.geoJson(json_TorresvigilanciaincendiosCyL_6, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_TorresvigilanciaincendiosCyL_6',
+            onEachFeature: pop_TorresvigilanciaincendiosCyL_6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_TorresvigilanciaincendiosCyL_6_0(feature));
+            },
+        });
+        var cluster_TorresvigilanciaincendiosCyL_6 = new L.MarkerClusterGroup({showCoverageOnHover: false,
+            spiderfyDistanceMultiplier: 2});
+        cluster_TorresvigilanciaincendiosCyL_6.addLayer(layer_TorresvigilanciaincendiosCyL_6);
+
+        bounds_group.addLayer(layer_TorresvigilanciaincendiosCyL_6);
+        cluster_TorresvigilanciaincendiosCyL_6.addTo(map);
+        var osmGeocoder = new L.Control.OSMGeocoder({
+            collapsed: false,
+            position: 'topright',
+            text: 'Search',
+        });
+        osmGeocoder.addTo(map);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/TorresvigilanciaincendiosCyL_6.png" /> Torres vigilancia incendios CyL': cluster_TorresvigilanciaincendiosCyL_6,'<img src="legend/CastillayLen_5.png" /> Castilla y León': layer_CastillayLen_5,'<img src="legend/Provincias_4.png" /> Provincias': layer_Provincias_4,"Mapa de sombras 5m": overlay_Mapadesombras5m_3,"Mapa de hipsometría 5m": overlay_Mapadehipsometra5m_2,"PNOA": overlay_PNOA_1,"Mapas raster del IGN": overlay_MapasrasterdelIGN_0,}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_TorresvigilanciaincendiosCyL_6.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['TORRE'] !== null?String('<div style="color: #000000; font-size: 11pt; font-weight: bold; font-style: italic; font-family: \'Ubuntu\', sans-serif;">' + layer.feature.properties['TORRE']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_TorresvigilanciaincendiosCyL_6'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        map.addControl(new L.Control.Search({
+            layer: cluster_TorresvigilanciaincendiosCyL_6,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'TORRE'}));
+        resetLabels([layer_TorresvigilanciaincendiosCyL_6]);
+        map.on("zoomend", function(){
+            resetLabels([layer_TorresvigilanciaincendiosCyL_6]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_TorresvigilanciaincendiosCyL_6]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_TorresvigilanciaincendiosCyL_6]);
+        });
+        </script>
+    </body>
+</html>

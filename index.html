@@ -38,7 +38,7 @@
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[39.945608692936375,-7.750659491987587],[43.324601119336506,0.0444181454036791]]);
+        }).fitBounds([[39.830848887373826,-8.643288722909121],[43.45725485472047,-0.37272902366815025]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -70,26 +70,12 @@
         });
         layer_OpenStreetMapmonochrome_0;
         map.addLayer(layer_OpenStreetMapmonochrome_0);
-        map.createPane('pane_CartografadelIGN_1');
-        map.getPane('pane_CartografadelIGN_1').style.zIndex = 401;
-        var layer_CartografadelIGN_1 = L.tileLayer.wmts('http://www.ign.es/wmts/mapa-raste', {
-            pane: 'pane_CartografadelIGN_1',
-            layer: 'MTN',
-            tilematrixSet: 'GoogleMapsCompatible',
-            format: 'image/jpeg',
-            style: 'default',
-            uppercase: true,
-            transparent: true,
-            continuousWorld : true,
-            opacity: 1.0,
-            attribution: '',
-        });
-        map.createPane('pane_ImgenesdesatliteSentinelyortofotosPNOA_2');
-        map.getPane('pane_ImgenesdesatliteSentinelyortofotosPNOA_2').style.zIndex = 402;
-        var layer_ImgenesdesatliteSentinelyortofotosPNOA_2 = L.tileLayer.wmts('http://www.ign.es/wmts/pnoa-m', {
-            pane: 'pane_ImgenesdesatliteSentinelyortofotosPNOA_2',
+        map.createPane('pane_ImgenesdesatliteSentinelyortofotosPNOA25830_1');
+        map.getPane('pane_ImgenesdesatliteSentinelyortofotosPNOA25830_1').style.zIndex = 401;
+        var layer_ImgenesdesatliteSentinelyortofotosPNOA25830_1 = L.tileLayer.wmts('http://www.ign.es/wmts/pnoa-m', {
+            pane: 'pane_ImgenesdesatliteSentinelyortofotosPNOA25830_1',
             layer: 'OI.OrthoimageCoverage',
-            tilematrixSet: 'GoogleMapsCompatible',
+            tilematrixSet: 'EPSG:25830',
             format: 'image/jpeg',
             style: 'default',
             uppercase: true,
@@ -98,6 +84,22 @@
             opacity: 1.0,
             attribution: '',
         });
+        map.addLayer(layer_ImgenesdesatliteSentinelyortofotosPNOA25830_1);
+        map.createPane('pane_rasterIGN25830_2');
+        map.getPane('pane_rasterIGN25830_2').style.zIndex = 402;
+        var layer_rasterIGN25830_2 = L.tileLayer.wmts('http://www.ign.es/wmts/mapa-raste', {
+            pane: 'pane_rasterIGN25830_2',
+            layer: 'MTN',
+            tilematrixSet: 'EPSG:25830',
+            format: 'image/jpeg',
+            style: 'default',
+            uppercase: true,
+            transparent: true,
+            continuousWorld : true,
+            opacity: 1.0,
+            attribution: '',
+        });
+        map.addLayer(layer_rasterIGN25830_2);
         function pop_Provincias_3(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
@@ -125,7 +127,7 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(190,207,80,0.0)',
-                interactive: true,
+                interactive: false,
             }
         }
         map.createPane('pane_Provincias_3');
@@ -133,7 +135,7 @@
         map.getPane('pane_Provincias_3').style['mix-blend-mode'] = 'normal';
         var layer_Provincias_3 = new L.geoJson(json_Provincias_3, {
             attribution: '',
-            interactive: true,
+            interactive: false,
             dataVar: 'json_Provincias_3',
             layerName: 'layer_Provincias_3',
             pane: 'pane_Provincias_3',
@@ -199,7 +201,7 @@
         bounds_group.addLayer(layer_TORRESINCENDIOS_4);
         map.addLayer(layer_TORRESINCENDIOS_4);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/TORRESINCENDIOS_4.png" /> TORRES INCENDIOS': layer_TORRESINCENDIOS_4,'<img src="legend/Provincias_3.png" /> Provincias': layer_Provincias_3,"Imágenes de satélite Sentinel y ortofotos PNOA": layer_ImgenesdesatliteSentinelyortofotosPNOA_2,"Cartografía del IGN": layer_CartografadelIGN_1,"OpenStreetMap monochrome": layer_OpenStreetMapmonochrome_0,}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/TORRESINCENDIOS_4.png" /> TORRES INCENDIOS': layer_TORRESINCENDIOS_4,'<img src="legend/Provincias_3.png" /> Provincias': layer_Provincias_3,"raster IGN 25830": layer_rasterIGN25830_2,"Imágenes de satélite Sentinel y ortofotos PNOA 25830": layer_ImgenesdesatliteSentinelyortofotosPNOA25830_1,"OpenStreetMap monochrome": layer_OpenStreetMapmonochrome_0,}).addTo(map);
         setBounds();
         var i = 0;
         layer_TORRESINCENDIOS_4.eachLayer(function(layer) {
